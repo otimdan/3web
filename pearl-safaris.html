@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pearl Safaris Uganda — Discover the Pearl of Africa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-primary: #1B2E1A;
+      --color-accent: #C8902A;
+      --color-accent-light: #E6B05A;
+      --color-surface: #FFFFFF;
+      --color-surface-alt: #F7F5F0;
+      --color-surface-dark: #111D10;
+      --color-text: #1A1A1A;
+      --color-text-muted: #6B7280;
+      --color-overlay: rgba(10,20,8,0.52);
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Lato', 'Open Sans', sans-serif;
+      --font-ui: 'Montserrat', sans-serif;
+      --radius-card: 10px;
+      --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-card-hover: 0 10px 36px rgba(0,0,0,0.16);
+      --max-width: 1200px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--color-text); background: var(--color-surface); overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    section { padding: 90px 0; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.35s, box-shadow 0.35s, padding 0.35s;
+    }
+    .navbar.scrolled {
+      background: #fff;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      padding: 14px 40px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-size: 22px; font-weight: 700;
+      color: white; letter-spacing: 0.01em;
+    }
+    .nav-logo .logo-icon {
+      width: 38px; height: 38px; background: var(--color-accent);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .navbar.scrolled .nav-logo { color: var(--color-primary); }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-ui); font-size: 14px; font-weight: 600;
+      color: rgba(255,255,255,0.9); letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--color-accent-light); }
+    .navbar.scrolled .nav-links a { color: var(--color-primary); }
+    .navbar.scrolled .nav-links a:hover { color: var(--color-accent); }
+    .nav-cta {
+      background: var(--color-accent); color: white !important;
+      padding: 11px 26px; border-radius: 4px;
+      font-family: var(--font-ui); font-weight: 700; font-size: 14px;
+      letter-spacing: 0.04em; transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: #a8761f; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .hamburger span { width: 24px; height: 2px; background: white; border-radius: 2px; transition: all 0.3s; }
+    .navbar.scrolled .hamburger span { background: var(--color-primary); }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; background: var(--color-primary);
+      z-index: 999; padding: 100px 40px 40px;
+      flex-direction: column; gap: 28px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--font-ui); font-size: 20px; font-weight: 600; color: white; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
+    .mobile-menu a:last-child { background: var(--color-accent); text-align: center; padding: 14px; border-radius: 4px; border: none; }
+    .mobile-close { position: absolute; top: 24px; right: 32px; background: none; border: none; cursor: pointer; color: white; font-size: 32px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh; position: relative; display: flex; align-items: center;
+      background: url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1800&auto=format&fit=crop') center/cover no-repeat;
+    }
+    .hero-overlay { position: absolute; inset: 0; background: var(--color-overlay); }
+    .hero-content { position: relative; z-index: 1; max-width: 680px; }
+    .hero-pre {
+      font-family: var(--font-ui); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--color-accent-light); margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: var(--font-display); font-size: clamp(44px, 6vw, 76px);
+      font-weight: 700; color: white; line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero h1 em { font-style: italic; color: var(--color-accent-light); }
+    .hero-subtitle {
+      font-size: 18px; color: rgba(255,255,255,0.82);
+      line-height: 1.7; max-width: 520px; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 14px 32px;
+      font-family: var(--font-ui); font-weight: 700; font-size: 14px;
+      letter-spacing: 0.04em; border-radius: 4px;
+      transition: all 0.25s; cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--color-accent); color: white; }
+    .btn-primary:hover { background: #a8761f; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,144,42,0.4); }
+    .btn-ghost-white { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.7); }
+    .btn-ghost-white:hover { background: rgba(255,255,255,0.12); border-color: white; }
+    .btn-secondary { background: transparent; color: var(--color-primary); border: 2px solid var(--color-primary); }
+    .btn-secondary:hover { background: var(--color-primary); color: white; }
+
+    .hero-scroll {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center;
+      gap: 8px; color: rgba(255,255,255,0.6);
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    .hero-scroll::after { content: ''; width: 1px; height: 50px; background: rgba(255,255,255,0.4); }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* ===== INTRO STRIP ===== */
+    .intro-strip { background: var(--color-primary); padding: 28px 0; }
+    .intro-strip-inner {
+      display: flex; align-items: center; justify-content: center;
+      gap: 48px; flex-wrap: wrap;
+    }
+    .intro-strip-item {
+      display: flex; align-items: center; gap: 12px;
+      color: rgba(255,255,255,0.8); font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+    }
+    .intro-strip-item .dot { width: 8px; height: 8px; background: var(--color-accent); border-radius: 50%; flex-shrink: 0; }
+
+    /* ===== ABOUT ===== */
+    #about { background: var(--color-surface-alt); }
+    .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .feature-row.reverse { direction: rtl; }
+    .feature-row.reverse > * { direction: ltr; }
+    .section-label {
+      font-family: var(--font-ui); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(28px, 3vw, 42px);
+      color: var(--color-primary); line-height: 1.2; margin-bottom: 20px;
+    }
+    .section-body { font-size: 17px; line-height: 1.8; color: var(--color-text-muted); margin-bottom: 28px; }
+    .about-img { border-radius: 12px; width: 100%; height: 480px; object-fit: cover; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
+    .checkmarks { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .checkmarks li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--color-text-muted); }
+    .checkmarks li::before { content: '✓'; color: var(--color-accent); font-weight: 700; font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--color-accent);
+      padding: 52px 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    .stat-number { font-family: var(--font-ui); font-size: clamp(36px, 5vw, 56px); font-weight: 800; color: white; line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-family: var(--font-ui); font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.75); }
+
+    /* ===== EXPERIENCES ===== */
+    #experiences { background: var(--color-surface); }
+    .section-header { text-align: center; max-width: 600px; margin: 0 auto 60px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; }
+    .card {
+      background: white; border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card); overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-card-hover); }
+    .card-img { width: 100%; height: 220px; object-fit: cover; }
+    .card-body { padding: 24px; }
+    .card-tag {
+      font-family: var(--font-ui); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 10px;
+    }
+    .card-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--color-primary); margin-bottom: 10px; }
+    .card-text { font-size: 14px; color: var(--color-text-muted); line-height: 1.7; margin-bottom: 18px; }
+    .card-link {
+      font-family: var(--font-ui); font-size: 13px; font-weight: 700;
+      color: var(--color-accent); letter-spacing: 0.05em;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .card-link::after { content: '→'; transition: transform 0.2s; }
+    .card:hover .card-link::after { transform: translateX(4px); }
+
+    /* ===== DESTINATIONS ===== */
+    #destinations { background: var(--color-surface-alt); }
+    .destinations-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto; gap: 20px; }
+    .dest-card {
+      position: relative; border-radius: 10px; overflow: hidden;
+      cursor: pointer; transition: transform 0.3s;
+    }
+    .dest-card:hover { transform: scale(1.02); }
+    .dest-card.featured { grid-column: 1 / 3; grid-row: 1 / 3; }
+    .dest-img { width: 100%; height: 100%; min-height: 240px; object-fit: cover; display: block; }
+    .dest-card.featured .dest-img { min-height: 500px; }
+    .dest-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 24px; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+    }
+    .dest-label { font-family: var(--font-ui); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent-light); margin-bottom: 6px; }
+    .dest-name { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: white; }
+    .dest-card.featured .dest-name { font-size: 32px; }
+
+    /* ===== TESTIMONIALS ===== */
+    #testimonials { background: var(--color-primary); }
+    #testimonials .section-title { color: white; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; margin-top: 52px; }
+    .testimonial-card { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 32px; border: 1px solid rgba(255,255,255,0.1); }
+    .stars { color: var(--color-accent); font-size: 18px; margin-bottom: 16px; letter-spacing: 2px; }
+    .testimonial-text { font-size: 16px; font-style: italic; color: rgba(255,255,255,0.8); line-height: 1.8; margin-bottom: 24px; }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .author-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--color-accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-ui); font-weight: 700; color: white; font-size: 16px; flex-shrink: 0; }
+    .author-name { font-family: var(--font-ui); font-size: 14px; font-weight: 700; color: white; }
+    .author-origin { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+    /* ===== PROCESS ===== */
+    #process { background: var(--color-surface); }
+    .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 56px; }
+    .process-step { text-align: center; }
+    .step-num {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--color-surface-alt); border: 2px solid var(--color-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-ui); font-size: 22px; font-weight: 800;
+      color: var(--color-accent); margin: 0 auto 20px;
+    }
+    .step-icon { font-size: 28px; margin-bottom: 16px; }
+    .step-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--color-primary); margin-bottom: 10px; }
+    .step-text { font-size: 14px; color: var(--color-text-muted); line-height: 1.7; }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      background: url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1400&auto=format&fit=crop') center/cover no-repeat;
+      position: relative; padding: 120px 24px; text-align: center;
+    }
+    .cta-banner::before { content: ''; position: absolute; inset: 0; background: rgba(10,20,8,0.65); }
+    .cta-banner-inner { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }
+    .cta-banner h2 { font-family: var(--font-display); font-size: clamp(32px, 4vw, 52px); color: white; margin: 16px 0; }
+    .cta-banner p { color: rgba(255,255,255,0.78); font-size: 18px; margin-bottom: 40px; line-height: 1.7; }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--color-surface-dark); color: white; padding: 72px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+    .footer-brand .brand-name { font-family: var(--font-display); font-size: 24px; font-weight: 700; margin-bottom: 14px; }
+    .footer-brand p { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.55); max-width: 280px; }
+    .footer-social { display: flex; gap: 12px; margin-top: 20px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); display: flex; align-items: center;
+      justify-content: center; transition: background 0.2s; font-size: 15px;
+    }
+    .social-btn:hover { background: var(--color-accent); }
+    .footer-col h4 { font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul li { font-size: 14px; color: rgba(255,255,255,0.65); }
+    .footer-col ul a { color: rgba(255,255,255,0.65); transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--color-accent-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255,255,255,0.35); flex-wrap: wrap; gap: 12px; }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed; bottom: 32px; right: 32px; z-index: 900;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 10px 32px rgba(37,211,102,0.55); }
+    .whatsapp-pulse {
+      position: absolute; width: 100%; height: 100%; border-radius: 50%;
+      background: rgba(37,211,102,0.4); animation: pulse 2.5s infinite;
+    }
+    @keyframes pulse { 0%{transform:scale(1);opacity:0.6} 100%{transform:scale(1.8);opacity:0} }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-stagger > * { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal-stagger.visible > *:nth-child(1) { opacity:1;transform:none;transition-delay:0.05s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity:1;transform:none;transition-delay:0.15s; }
+    .reveal-stagger.visible > *:nth-child(3) { opacity:1;transform:none;transition-delay:0.25s; }
+    .reveal-stagger.visible > *:nth-child(4) { opacity:1;transform:none;transition-delay:0.35s; }
+    .reveal-stagger.visible > *:nth-child(5) { opacity:1;transform:none;transition-delay:0.45s; }
+    .reveal-stagger.visible > *:nth-child(6) { opacity:1;transform:none;transition-delay:0.55s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width: 900px) {
+      .feature-row { grid-template-columns: 1fr; gap: 40px; }
+      .feature-row.reverse { direction: ltr; }
+      .about-img { height: 340px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .destinations-grid { grid-template-columns: 1fr 1fr; }
+      .dest-card.featured { grid-column: 1 / 3; grid-row: auto; }
+      .dest-card.featured .dest-img { min-height: 320px; }
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .navbar { padding: 18px 24px; }
+      .navbar.scrolled { padding: 14px 24px; }
+    }
+    @media(max-width: 600px) {
+      section { padding: 64px 0; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 40px 20px; }
+      .destinations-grid { grid-template-columns: 1fr; }
+      .dest-card.featured { grid-column: 1; }
+      .process-steps { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero { background-position: 60% center; }
+      .hero-btns { flex-direction: column; }
+      .btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="/" class="nav-logo">
+      <div class="logo-icon">🦍</div>
+      Pearl Safaris
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experiences">Experiences</a></li>
+      <li><a href="#destinations">Destinations</a></li>
+      <li><a href="#process">How It Works</a></li>
+      <li><a href="#contact" class="nav-cta">Plan My Safari</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose">✕</button>
+    <a href="#about">About</a>
+    <a href="#experiences">Experiences</a>
+    <a href="#destinations">Destinations</a>
+    <a href="#process">How It Works</a>
+    <a href="#contact">Plan My Safari</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-pre">📍 Uganda & East Africa</p>
+        <h1>Journey into<br><em>the Wild Heart</em><br>of Africa</h1>
+        <p class="hero-subtitle">Expert-guided gorilla treks, savanna safaris, and cultural immersions across Uganda, Rwanda, and Kenya — crafted for those who seek something real.</p>
+        <div class="hero-btns">
+          <a href="#experiences" class="btn btn-primary">Explore Experiences</a>
+          <a href="#contact" class="btn btn-ghost-white">Plan My Safari</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- INTRO STRIP -->
+  <div class="intro-strip">
+    <div class="container">
+      <div class="intro-strip-inner">
+        <div class="intro-strip-item"><span class="dot"></span>Gorilla Trekking</div>
+        <div class="intro-strip-item"><span class="dot"></span>Big Five Safaris</div>
+        <div class="intro-strip-item"><span class="dot"></span>Nile River Adventures</div>
+        <div class="intro-strip-item"><span class="dot"></span>Chimpanzee Tracking</div>
+        <div class="intro-strip-item"><span class="dot"></span>Cultural Encounters</div>
+        <div class="intro-strip-item"><span class="dot"></span>Birdwatching</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="feature-row reveal">
+        <div>
+          <p class="section-label">Who We Are</p>
+          <h2 class="section-title">Uganda's Premier Boutique Safari Company</h2>
+          <p class="section-body">Founded in Kampala by experienced wilderness guides, Pearl Safaris has spent over a decade creating private, personalised journeys across East Africa. We don't do crowds. We don't do cookie-cutter. Every itinerary is built around you — your pace, your passion, your story.</p>
+          <ul class="checkmarks">
+            <li>Licensed by the Uganda Tourism Board</li>
+            <li>Certified mountain gorilla trekking guides</li>
+            <li>Community-conscious tourism — we give back</li>
+            <li>100% tailor-made itineraries, no package limitations</li>
+          </ul>
+          <a href="#contact" class="btn btn-secondary">Talk to a Guide</a>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1575550959106-5a7defe28b56?w=800&auto=format&fit=crop" alt="Safari guides in Uganda forest" class="about-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar reveal">
+    <div>
+      <div class="stat-number">1,400+</div>
+      <div class="stat-label">Guests Hosted</div>
+    </div>
+    <div>
+      <div class="stat-number">12</div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div>
+      <div class="stat-number">18</div>
+      <div class="stat-label">Destinations Covered</div>
+    </div>
+    <div>
+      <div class="stat-number">98%</div>
+      <div class="stat-label">5-Star Satisfaction</div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCES -->
+  <section id="experiences">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">What We Offer</p>
+        <h2 class="section-title">Extraordinary Experiences, Expertly Guided</h2>
+      </div>
+      <div class="cards-grid reveal-stagger">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&auto=format&fit=crop" alt="Gorilla trekking" class="card-img">
+          <div class="card-body">
+            <p class="card-tag">🦍 Signature Experience</p>
+            <h3 class="card-title">Gorilla Trekking</h3>
+            <p class="card-text">Venture into Bwindi Impenetrable Forest for an unforgettable hour with a mountain gorilla family. One of the most profound wildlife encounters on earth.</p>
+            <span class="card-link">Explore this journey</span>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&auto=format&fit=crop" alt="Queen Elizabeth National Park" class="card-img">
+          <div class="card-body">
+            <p class="card-tag">🐘 Wildlife Safari</p>
+            <h3 class="card-title">Big Game Safaris</h3>
+            <p class="card-text">Track lions, leopards, elephants, and hippos across Queen Elizabeth, Murchison Falls, and Kidepo Valley National Parks on expert-guided game drives.</p>
+            <span class="card-link">Explore this journey</span>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1503866926187-40bb8fab6825?w=600&auto=format&fit=crop" alt="Nile River" class="card-img">
+          <div class="card-body">
+            <p class="card-tag">🌊 Adventure</p>
+            <h3 class="card-title">Nile River Adventures</h3>
+            <p class="card-text">Raft the White Nile's legendary rapids, cruise below Murchison Falls at sunset, or kayak along the world's longest river in Jinja, Uganda's adventure capital.</p>
+            <span class="card-link">Explore this journey</span>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=600&auto=format&fit=crop" alt="Chimpanzee tracking Kibale" class="card-img">
+          <div class="card-body">
+            <p class="card-tag">🐒 Primate Tracking</p>
+            <h3 class="card-title">Chimpanzee Tracking</h3>
+            <p class="card-text">Kibale Forest holds the highest density of primates in Africa. Walk among wild chimpanzees and observe their complex social lives up close.</p>
+            <span class="card-link">Explore this journey</span>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&auto=format&fit=crop" alt="Uganda cultural village" class="card-img">
+          <div class="card-body">
+            <p class="card-tag">🎭 Culture & Heritage</p>
+            <h3 class="card-title">Community & Culture</h3>
+            <p class="card-text">Visit traditional kingdoms, learn to cook Ugandan cuisine, and meet artisans keeping ancient crafts alive. Tourism that benefits local communities directly.</p>
+            <span class="card-link">Explore this journey</span>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1520116468816-95b69f847357?w=600&auto=format&fit=crop" alt="Birds Uganda" class="card-img">
+          <div class="card-body">
+            <p class="card-tag">🦜 Specialist</p>
+            <h3 class="card-title">Birding Expeditions</h3>
+            <p class="card-text">Uganda boasts over 1,070 bird species including the iconic Shoebill. Our specialist guides make every expedition a record-breaking delight.</p>
+            <span class="card-link">Explore this journey</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTINATIONS -->
+  <section id="destinations">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Where We Go</p>
+        <h2 class="section-title">Wild Landscapes, Iconic Destinations</h2>
+      </div>
+      <div class="destinations-grid reveal">
+        <div class="dest-card featured">
+          <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=900&auto=format&fit=crop" alt="Bwindi Impenetrable Forest" class="dest-img">
+          <div class="dest-overlay">
+            <div class="dest-label">Southwest Uganda</div>
+            <div class="dest-name">Bwindi Impenetrable Forest</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1600706432502-50a7b68a7a01?w=600&auto=format&fit=crop" alt="Murchison Falls" class="dest-img">
+          <div class="dest-overlay">
+            <div class="dest-label">Northern Uganda</div>
+            <div class="dest-name">Murchison Falls</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1504432842672-1a79f78e4084?w=600&auto=format&fit=crop" alt="Queen Elizabeth Park" class="dest-img">
+          <div class="dest-overlay">
+            <div class="dest-label">Western Uganda</div>
+            <div class="dest-name">Queen Elizabeth Park</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=600&auto=format&fit=crop" alt="Jinja Nile Source" class="dest-img">
+          <div class="dest-overlay">
+            <div class="dest-label">Eastern Uganda</div>
+            <div class="dest-name">Jinja & the Nile Source</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1474690870753-1b92efa1f2d8?w=600&auto=format&fit=crop" alt="Rwanda Volcanoes" class="dest-img">
+          <div class="dest-overlay">
+            <div class="dest-label">Rwanda</div>
+            <div class="dest-name">Volcanoes National Park</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label" style="color:var(--color-accent-light)">Traveller Stories</p>
+        <h2 class="section-title">Words from Those Who've Gone Wild</h2>
+      </div>
+      <div class="testimonials-grid reveal-stagger">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Sitting face-to-face with a silverback gorilla while morning mist rolled through Bwindi is a moment I'll carry for the rest of my life. Pearl Safaris made it happen, flawlessly."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">SL</div>
+            <div>
+              <div class="author-name">Sophie Lindberg</div>
+              <div class="author-origin">Stockholm, Sweden</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"From Kampala to Kidepo Valley, our guide Moses knew every bird call, every animal track. The team's knowledge was encyclopedic — and their warmth was even better."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JO</div>
+            <div>
+              <div class="author-name">James O'Brien</div>
+              <div class="author-origin">New York, USA</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Everything was handled — permits, lodges, transfers, meals. We just had to show up and be amazed. Uganda completely changed our view of what Africa could be."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AP</div>
+            <div>
+              <div class="author-name">Anjali Patel</div>
+              <div class="author-origin">Nairobi, Kenya</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">How It Works</p>
+        <h2 class="section-title">Your Safari in Four Simple Steps</h2>
+      </div>
+      <div class="process-steps reveal-stagger">
+        <div class="process-step">
+          <div class="step-icon">💬</div>
+          <div class="step-num">01</div>
+          <h3 class="step-title">Tell Us Your Dream</h3>
+          <p class="step-text">Fill in our short inquiry form or WhatsApp us directly. Share your dates, interests, budget, and group size — no detail is too small.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-icon">🗺️</div>
+          <div class="step-num">02</div>
+          <h3 class="step-title">We Design Your Journey</h3>
+          <p class="step-text">Our expert team crafts a bespoke itinerary with handpicked lodges, guides, and experiences — built around you, not a brochure.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-icon">✅</div>
+          <div class="step-num">03</div>
+          <h3 class="step-title">We Handle Everything</h3>
+          <p class="step-text">Permits, transfers, accommodations, visas guidance — we manage every detail so your only job is to pack your bags and arrive ready.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-icon">🌿</div>
+          <div class="step-num">04</div>
+          <h3 class="step-title">Experience Africa</h3>
+          <p class="step-text">Step into the wild with a dedicated guide by your side. Return home with memories that no photograph can fully capture.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <div class="cta-banner-inner reveal">
+      <p class="section-label">Ready to Go?</p>
+      <h2>Your Safari Begins with One Conversation</h2>
+      <p>Whether you have a clear vision or just a sense of wonder — we'll take it from there. Talk to one of our safari experts today, no commitment required.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="#contact" class="btn btn-primary" style="font-size:16px;padding:16px 40px;">Plan My Safari</a>
+        <a href="https://wa.me/256700000000" class="btn btn-ghost-white" style="font-size:16px;padding:16px 40px;">💬 WhatsApp Us</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section id="contact" style="background:var(--color-surface-alt);">
+    <div class="container">
+      <div class="feature-row reveal">
+        <div>
+          <p class="section-label">Get In Touch</p>
+          <h2 class="section-title">Let's Plan Something Unforgettable</h2>
+          <p class="section-body">Complete the form and one of our safari consultants will be in touch within 24 hours. We love talking about Uganda — so don't be shy.</p>
+          <div style="display:flex;flex-direction:column;gap:16px;margin-top:32px;">
+            <div style="display:flex;align-items:center;gap:14px;font-size:15px;color:var(--color-text-muted);">
+              <span style="font-size:22px;">📍</span> Plot 12, Nakasero Road, Kampala, Uganda
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;font-size:15px;color:var(--color-text-muted);">
+              <span style="font-size:22px;">📞</span> <a href="tel:+256700000000">+256 700 000-000</a>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;font-size:15px;color:var(--color-text-muted);">
+              <span style="font-size:22px;">✉️</span> <a href="mailto:info@pearlsafaris.ug">info@pearlsafaris.ug</a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="background:white;border-radius:12px;padding:40px;box-shadow:var(--shadow-card);">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div>
+                <label style="font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);display:block;margin-bottom:8px;">First Name</label>
+                <input type="text" placeholder="Sarah" style="width:100%;padding:12px 16px;border:1.5px solid #e5e7eb;border-radius:6px;font-family:var(--font-body);font-size:15px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#C8902A'" onblur="this.style.borderColor='#e5e7eb'">
+              </div>
+              <div>
+                <label style="font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);display:block;margin-bottom:8px;">Last Name</label>
+                <input type="text" placeholder="Johnson" style="width:100%;padding:12px 16px;border:1.5px solid #e5e7eb;border-radius:6px;font-family:var(--font-body);font-size:15px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#C8902A'" onblur="this.style.borderColor='#e5e7eb'">
+              </div>
+            </div>
+            <div style="margin-bottom:16px;">
+              <label style="font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);display:block;margin-bottom:8px;">Email Address</label>
+              <input type="email" placeholder="sarah@email.com" style="width:100%;padding:12px 16px;border:1.5px solid #e5e7eb;border-radius:6px;font-family:var(--font-body);font-size:15px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#C8902A'" onblur="this.style.borderColor='#e5e7eb'">
+            </div>
+            <div style="margin-bottom:16px;">
+              <label style="font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);display:block;margin-bottom:8px;">Experience Interested In</label>
+              <select style="width:100%;padding:12px 16px;border:1.5px solid #e5e7eb;border-radius:6px;font-family:var(--font-body);font-size:15px;outline:none;color:var(--color-text);appearance:none;background:white url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 20 20&quot; fill=&quot;%236B7280&quot;><path d=&quot;M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z&quot;/></svg>') no-repeat right 12px center/20px;">
+                <option value="">Select an experience…</option>
+                <option>Gorilla Trekking</option>
+                <option>Big Game Safari</option>
+                <option>Chimpanzee Tracking</option>
+                <option>Nile River Adventure</option>
+                <option>Birding Expedition</option>
+                <option>Multi-Country Safari</option>
+                <option>Not sure yet — help me decide!</option>
+              </select>
+            </div>
+            <div style="margin-bottom:24px;">
+              <label style="font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);display:block;margin-bottom:8px;">Tell Us More</label>
+              <textarea rows="4" placeholder="Travel dates, group size, any special requests…" style="width:100%;padding:12px 16px;border:1.5px solid #e5e7eb;border-radius:6px;font-family:var(--font-body);font-size:15px;outline:none;resize:vertical;transition:border-color .2s;" onfocus="this.style.borderColor='#C8902A'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
+            </div>
+            <button class="btn btn-primary" style="width:100%;font-size:16px;padding:16px;">Send My Enquiry →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-name">🦍 Pearl Safaris</div>
+          <p>Kampala-based safari specialists crafting personalised wildlife and cultural journeys across Uganda and East Africa since 2012. Licensed. Community-first. Unforgettable.</p>
+          <div class="footer-social">
+            <a href="#" class="social-btn">𝕏</a>
+            <a href="#" class="social-btn">f</a>
+            <a href="#" class="social-btn">▶</a>
+            <a href="#" class="social-btn">📷</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Experiences</h4>
+          <ul>
+            <li><a href="#">Gorilla Trekking</a></li>
+            <li><a href="#">Game Drives</a></li>
+            <li><a href="#">Chimpanzees</a></li>
+            <li><a href="#">Nile Adventures</a></li>
+            <li><a href="#">Birding Tours</a></li>
+            <li><a href="#">Cultural Safaris</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Destinations</h4>
+          <ul>
+            <li><a href="#">Bwindi Forest</a></li>
+            <li><a href="#">Queen Elizabeth Park</a></li>
+            <li><a href="#">Murchison Falls</a></li>
+            <li><a href="#">Kibale Forest</a></li>
+            <li><a href="#">Jinja / Nile</a></li>
+            <li><a href="#">Rwanda</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li>Plot 12, Nakasero Road</li>
+            <li>Kampala, Uganda</li>
+            <li><a href="tel:+256700000000">+256 700 000-000</a></li>
+            <li><a href="mailto:info@pearlsafaris.ug">info@pearlsafaris.ug</a></li>
+            <li><a href="https://wa.me/256700000000">WhatsApp Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Pearl Safaris Uganda. All rights reserved.</p>
+        <p>Licensed by Uganda Tourism Board · Community-First Tourism</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/256700000000" class="whatsapp-float" target="_blank" aria-label="Chat with us on WhatsApp">
+    <div class="whatsapp-pulse"></div>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Sticky navbar
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+    hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+    mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

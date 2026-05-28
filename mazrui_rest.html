@@ -1,0 +1,2310 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mazuri Kitchen — Fresh, Bold, East African</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        /* Green & White restaurant palette */
+        --green-deep: #1a3d2b; /* deep forest green — nav, headings, footer */
+        --green-mid: #2d6a4f; /* mid green — buttons, accents */
+        --green-bright: #52b788; /* bright fresh green — highlights, tags */
+        --green-light: #d8f3dc; /* mint tint — soft backgrounds */
+        --cream: #fafdf7; /* near-white with green warmth */
+        --white: #ffffff;
+        --text-dark: #132117;
+        --text-muted: #5a7a65;
+        --overlay: rgba(10, 28, 16, 0.54);
+
+        --font-display: "Playfair Display", Georgia, serif;
+        --font-body: "Lato", sans-serif;
+        --font-ui: "Montserrat", sans-serif;
+
+        --radius: 6px;
+        --shadow: 0 4px 24px rgba(26, 61, 43, 0.1);
+        --shadow-lg: 0 12px 40px rgba(26, 61, 43, 0.18);
+        --max-width: 1200px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font-body);
+        color: var(--text-dark);
+        background: var(--white);
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      ul {
+        list-style: none;
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 28px;
+      }
+      section {
+        padding: 92px 0;
+      }
+
+      /* ── TOP INFO BAR ── */
+      .top-bar {
+        background: var(--green-deep);
+        padding: 8px 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: var(--font-ui);
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 0.05em;
+      }
+      .top-bar-left {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+      }
+      .top-bar-left span::before {
+        margin-right: 6px;
+      }
+      .top-bar a {
+        color: var(--green-bright);
+        transition: color 0.2s;
+      }
+      .top-bar a:hover {
+        color: #fff;
+      }
+      .hours-badge {
+        background: var(--green-bright);
+        color: var(--green-deep);
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.07em;
+      }
+
+      /* ── NAVBAR ── */
+      .navbar {
+        position: fixed;
+        top: 36px;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 18px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition:
+          background 0.35s,
+          box-shadow 0.35s,
+          top 0.3s,
+          padding 0.3s;
+      }
+      .navbar.scrolled {
+        top: 0;
+        background: var(--white);
+        box-shadow: 0 2px 20px rgba(26, 61, 43, 0.12);
+        padding: 14px 40px;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-leaf {
+        width: 38px;
+        height: 38px;
+        background: var(--green-bright);
+        border-radius: 50% 50% 50% 10%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+        transition: background 0.2s;
+      }
+      .navbar.scrolled .logo-leaf {
+        background: var(--green-mid);
+      }
+      .logo-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1;
+      }
+      .logo-name {
+        font-family: var(--font-display);
+        font-size: 21px;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 0.02em;
+      }
+      .logo-sub {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--green-bright);
+        margin-top: 2px;
+      }
+      .navbar.scrolled .logo-name {
+        color: var(--green-deep);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+      .nav-links a {
+        font-family: var(--font-ui);
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: rgba(255, 255, 255, 0.88);
+        position: relative;
+        transition: color 0.2s;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--green-bright);
+        transform: scaleX(0);
+        transition: transform 0.25s;
+        transform-origin: left;
+        border-radius: 2px;
+      }
+      .nav-links a:hover {
+        color: var(--green-bright);
+      }
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+      }
+      .navbar.scrolled .nav-links a {
+        color: var(--green-deep);
+      }
+      .navbar.scrolled .nav-links a:hover {
+        color: var(--green-mid);
+      }
+
+      .nav-reserve {
+        background: var(--green-bright);
+        color: var(--green-deep) !important;
+        padding: 11px 26px;
+        border-radius: var(--radius);
+        font-family: var(--font-ui);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+        border: none;
+      }
+      .nav-reserve:hover {
+        background: #74c9a0;
+        transform: translateY(-1px);
+      }
+      .nav-reserve::after {
+        display: none !important;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: none;
+        border: none;
+      }
+      .hamburger span {
+        width: 24px;
+        height: 2px;
+        background: white;
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+      .navbar.scrolled .hamburger span {
+        background: var(--green-deep);
+      }
+
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--green-deep);
+        z-index: 999;
+        flex-direction: column;
+        padding: 100px 40px 48px;
+        gap: 0;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        font-family: var(--font-ui);
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.85);
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: color 0.2s;
+      }
+      .mobile-menu a:hover {
+        color: var(--green-bright);
+      }
+      .mob-cta-link {
+        background: var(--green-bright);
+        color: var(--green-deep) !important;
+        text-align: center;
+        margin-top: 28px;
+        border-radius: var(--radius);
+        padding: 16px;
+        border: none !important;
+      }
+      .mob-close {
+        position: absolute;
+        top: 22px;
+        right: 32px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+      }
+
+      /* ── BUTTONS ── */
+      .btn {
+        display: inline-block;
+        padding: 14px 34px;
+        font-family: var(--font-ui);
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-radius: var(--radius);
+        transition: all 0.25s;
+        cursor: pointer;
+        border: none;
+      }
+      .btn-green {
+        background: var(--green-mid);
+        color: white;
+      }
+      .btn-green:hover {
+        background: var(--green-deep);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(45, 106, 79, 0.35);
+      }
+      .btn-bright {
+        background: var(--green-bright);
+        color: var(--green-deep);
+      }
+      .btn-bright:hover {
+        background: #74c9a0;
+        transform: translateY(-2px);
+      }
+      .btn-outline-white {
+        background: transparent;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.75);
+      }
+      .btn-outline-white:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: white;
+      }
+      .btn-outline-green {
+        background: transparent;
+        color: var(--green-deep);
+        border: 2px solid var(--green-mid);
+      }
+      .btn-outline-green:hover {
+        background: var(--green-deep);
+        color: white;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1900&auto=format&fit=crop&q=80")
+          center/cover no-repeat;
+      }
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: var(--overlay);
+      }
+      /* decorative green leaf shapes */
+      .hero-deco {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(
+          circle at top right,
+          rgba(82, 183, 136, 0.18),
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 660px;
+      }
+      .hero-pre {
+        font-family: var(--font-ui);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--green-bright);
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .hero-pre::before {
+        content: "";
+        width: 36px;
+        height: 2px;
+        background: var(--green-bright);
+        border-radius: 2px;
+      }
+      .hero h1 {
+        font-family: var(--font-display);
+        font-size: clamp(48px, 6.5vw, 84px);
+        font-weight: 700;
+        color: white;
+        line-height: 1.07;
+        margin-bottom: 22px;
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: #a8edca;
+      }
+      .hero-sub {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.78);
+        line-height: 1.75;
+        max-width: 500px;
+        margin-bottom: 42px;
+        font-weight: 300;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      /* scroll indicator */
+      .scroll-cue {
+        position: absolute;
+        bottom: 36px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.5);
+        font-family: var(--font-ui);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        animation: bob 2.2s infinite;
+      }
+      .scroll-cue svg {
+        opacity: 0.6;
+      }
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(8px);
+        }
+      }
+
+      /* ── FEATURE STRIP ── */
+      .feature-strip {
+        background: var(--green-mid);
+        padding: 26px 28px;
+      }
+      .feature-strip-inner {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+        flex-wrap: wrap;
+      }
+      .strip-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 32px;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        font-family: var(--font-ui);
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.88);
+        letter-spacing: 0.04em;
+      }
+      .strip-item:last-child {
+        border-right: none;
+      }
+      .strip-item span {
+        font-size: 20px;
+      }
+
+      /* ── ABOUT ── */
+      #about {
+        background: var(--cream);
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 72px;
+        align-items: center;
+      }
+      .two-col.flip {
+        direction: rtl;
+      }
+      .two-col.flip > * {
+        direction: ltr;
+      }
+
+      .section-label {
+        font-family: var(--font-ui);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--green-mid);
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .section-label::before {
+        content: "";
+        width: 28px;
+        height: 2px;
+        background: var(--green-bright);
+        border-radius: 2px;
+      }
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(28px, 3.2vw, 44px);
+        color: var(--green-deep);
+        line-height: 1.18;
+        margin-bottom: 18px;
+      }
+      .section-body {
+        font-size: 17px;
+        line-height: 1.85;
+        color: var(--text-muted);
+        margin-bottom: 28px;
+        font-weight: 300;
+      }
+      .green-rule {
+        width: 48px;
+        height: 3px;
+        background: var(--green-bright);
+        border-radius: 3px;
+        margin: 20px 0;
+      }
+
+      .about-img-wrap {
+        position: relative;
+      }
+      .about-img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+      }
+      .about-pill {
+        position: absolute;
+        bottom: -22px;
+        right: -22px;
+        background: var(--green-deep);
+        color: white;
+        padding: 24px 28px;
+        border-radius: 12px;
+        font-family: var(--font-display);
+        font-size: 13px;
+        line-height: 1.5;
+        box-shadow: 0 8px 32px rgba(26, 61, 43, 0.35);
+      }
+      .about-pill strong {
+        font-size: 38px;
+        display: block;
+        font-weight: 700;
+        color: var(--green-bright);
+        margin-bottom: 4px;
+      }
+
+      .values-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 30px;
+      }
+      .value-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .value-dot {
+        width: 28px;
+        height: 28px;
+        background: var(--green-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
+        font-size: 14px;
+      }
+      .value-text h4 {
+        font-family: var(--font-ui);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--green-deep);
+        margin-bottom: 3px;
+      }
+      .value-text p {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      /* ── STATS BAR ── */
+      .stats-bar {
+        background: var(--green-deep);
+        padding: 56px 28px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        text-align: center;
+      }
+      .stat-cell {
+        padding: 0 20px;
+        border-right: 1px solid rgba(82, 183, 136, 0.25);
+      }
+      .stat-cell:last-child {
+        border-right: none;
+      }
+      .stat-num {
+        font-family: var(--font-ui);
+        font-size: clamp(38px, 5vw, 58px);
+        font-weight: 800;
+        color: var(--green-bright);
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      .stat-lbl {
+        font-family: var(--font-ui);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* ── MENU SECTION ── */
+      #menu {
+        background: var(--white);
+      }
+      .section-header {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 60px;
+      }
+      .section-header .section-label {
+        justify-content: center;
+      }
+      .section-header .section-label::before {
+        display: none;
+      }
+
+      .menu-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 52px;
+      }
+      .tab-btn {
+        font-family: var(--font-ui);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 10px 24px;
+        border-radius: 24px;
+        border: 2px solid var(--green-light);
+        background: transparent;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .tab-btn.active,
+      .tab-btn:hover {
+        background: var(--green-mid);
+        color: white;
+        border-color: var(--green-mid);
+      }
+
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+      }
+      .menu-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.32s,
+          box-shadow 0.32s;
+        border: 1px solid rgba(26, 61, 43, 0.07);
+      }
+      .menu-card:hover {
+        transform: translateY(-7px);
+        box-shadow: var(--shadow-lg);
+      }
+      .menu-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+      .menu-body {
+        padding: 24px;
+      }
+      .menu-tag {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--green-mid);
+        margin-bottom: 8px;
+      }
+      .menu-name {
+        font-family: var(--font-display);
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--green-deep);
+        margin-bottom: 8px;
+      }
+      .menu-desc {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.65;
+        margin-bottom: 18px;
+      }
+      .menu-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 16px;
+        border-top: 1px solid var(--green-light);
+      }
+      .menu-price {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--green-deep);
+      }
+      .menu-badge {
+        font-family: var(--font-ui);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        background: var(--green-light);
+        color: var(--green-mid);
+        padding: 5px 12px;
+        border-radius: 16px;
+      }
+      .menu-badge.spicy {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+      .menu-badge.vegan {
+        background: var(--green-light);
+        color: var(--green-mid);
+      }
+      .menu-badge.popular {
+        background: #fef3c7;
+        color: #d97706;
+      }
+
+      /* ── SPECIAL SECTION (Story split) ── */
+      #story {
+        background: var(--green-light);
+      }
+      .story-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+      }
+      .story-img {
+        width: 100%;
+        height: 520px;
+        object-fit: cover;
+      }
+      .story-text {
+        background: var(--green-deep);
+        padding: 60px 52px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .story-text .section-label {
+        color: var(--green-bright);
+      }
+      .story-text .section-label::before {
+        background: var(--green-bright);
+      }
+      .story-text .section-title {
+        color: white;
+      }
+      .story-text .section-body {
+        color: rgba(255, 255, 255, 0.65);
+      }
+      .story-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 36px;
+      }
+      .story-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      .story-list li::before {
+        content: "✦";
+        color: var(--green-bright);
+        font-size: 12px;
+        flex-shrink: 0;
+        margin-top: 3px;
+      }
+
+      /* ── SPECIALS ── */
+      #specials {
+        background: var(--white);
+      }
+      .specials-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .special-card {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 0;
+        background: var(--cream);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(26, 61, 43, 0.07);
+        transition:
+          transform 0.28s,
+          box-shadow 0.28s;
+      }
+      .special-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+      .special-img {
+        width: 140px;
+        height: 100%;
+        min-height: 160px;
+        object-fit: cover;
+      }
+      .special-body {
+        padding: 22px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+      }
+      .special-tag {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--green-mid);
+      }
+      .special-name {
+        font-family: var(--font-display);
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--green-deep);
+        line-height: 1.2;
+      }
+      .special-desc {
+        font-size: 13px;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+      .special-price {
+        font-family: var(--font-display);
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--green-mid);
+        margin-top: 4px;
+      }
+
+      /* ── TESTIMONIALS ── */
+      #reviews {
+        background: var(--cream);
+      }
+      .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 56px;
+      }
+      .review-card {
+        background: white;
+        padding: 36px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        border-bottom: 4px solid var(--green-bright);
+      }
+      .r-stars {
+        font-size: 15px;
+        color: #f59e0b;
+        letter-spacing: 3px;
+        margin-bottom: 14px;
+      }
+      .r-text {
+        font-size: 15px;
+        color: var(--text-muted);
+        line-height: 1.8;
+        font-style: italic;
+        margin-bottom: 24px;
+      }
+      .r-author {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .r-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--green-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-ui);
+        font-weight: 700;
+        font-size: 15px;
+        color: var(--green-mid);
+        flex-shrink: 0;
+      }
+      .r-name {
+        font-family: var(--font-ui);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--green-deep);
+      }
+      .r-origin {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      /* ── RESERVATION FORM ── */
+      #reserve {
+        background: var(--green-deep);
+      }
+      .reserve-inner {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 72px;
+        align-items: center;
+      }
+      .reserve-left .section-title {
+        color: white;
+      }
+      .reserve-left .section-body {
+        color: rgba(255, 255, 255, 0.62);
+      }
+      .reserve-left .section-label {
+        color: var(--green-bright);
+      }
+      .reserve-left .section-label::before {
+        background: var(--green-bright);
+      }
+      .contact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .c-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(82, 183, 136, 0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      .c-label {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--green-bright);
+        margin-bottom: 4px;
+      }
+      .c-val {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .c-val a {
+        color: rgba(255, 255, 255, 0.72);
+        transition: color 0.2s;
+      }
+      .c-val a:hover {
+        color: var(--green-bright);
+      }
+
+      .form-card {
+        background: white;
+        padding: 48px;
+        border-radius: 16px;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+      }
+      .form-card h3 {
+        font-family: var(--font-display);
+        font-size: 26px;
+        color: var(--green-deep);
+        margin-bottom: 28px;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .form-group {
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        font-family: var(--font-ui);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--green-mid);
+        display: block;
+        margin-bottom: 8px;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 13px 16px;
+        border: 1.5px solid #d1e7d9;
+        border-radius: var(--radius);
+        font-family: var(--font-body);
+        font-size: 15px;
+        color: var(--text-dark);
+        background: #fafdf8;
+        outline: none;
+        transition: border-color 0.2s;
+        appearance: none;
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: var(--green-bright);
+      }
+      .form-group textarea {
+        resize: vertical;
+      }
+      .form-submit {
+        width: 100%;
+        padding: 16px;
+        background: var(--green-mid);
+        color: white;
+        font-family: var(--font-ui);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .form-submit:hover {
+        background: var(--green-deep);
+      }
+      .form-note {
+        font-size: 12px;
+        color: var(--text-muted);
+        text-align: center;
+        margin-top: 12px;
+      }
+
+      /* ── CTA BANNER ── */
+      .cta-banner {
+        background: url("https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1600&auto=format&fit=crop&q=80")
+          center/cover no-repeat;
+        position: relative;
+        padding: 120px 28px;
+        text-align: center;
+      }
+      .cta-banner::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 28, 16, 0.68);
+      }
+      .cta-banner-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      .cta-banner .section-label {
+        justify-content: center;
+        color: var(--green-bright);
+      }
+      .cta-banner .section-label::before {
+        display: none;
+      }
+      .cta-banner h2 {
+        font-family: var(--font-display);
+        font-size: clamp(32px, 4vw, 54px);
+        color: white;
+        margin: 16px 0 22px;
+      }
+      .cta-banner p {
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 18px;
+        margin-bottom: 40px;
+        line-height: 1.75;
+        font-weight: 300;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        background: #0e2118;
+        color: white;
+        padding: 72px 0 28px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.8fr 1fr 1fr 1fr;
+        gap: 52px;
+        margin-bottom: 56px;
+      }
+      .footer-brand-name {
+        font-family: var(--font-display);
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .footer-brand-sub {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--green-bright);
+        margin-bottom: 18px;
+      }
+      .footer-brand p {
+        font-size: 14px;
+        line-height: 1.85;
+        color: rgba(255, 255, 255, 0.48);
+        max-width: 260px;
+      }
+      .footer-social {
+        display: flex;
+        gap: 10px;
+        margin-top: 22px;
+      }
+      .s-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        transition: background 0.2s;
+      }
+      .s-btn:hover {
+        background: var(--green-mid);
+      }
+      .footer-col h4 {
+        font-family: var(--font-ui);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        margin-bottom: 20px;
+      }
+      .footer-col ul {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .footer-col ul li,
+      .footer-col ul a {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.55);
+        transition: color 0.2s;
+      }
+      .footer-col ul a:hover {
+        color: var(--green-bright);
+      }
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.3);
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .cert-badges {
+        display: flex;
+        gap: 16px;
+      }
+      .c-badge {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border: 1px solid rgba(82, 183, 136, 0.35);
+        color: var(--green-bright);
+        padding: 5px 12px;
+        border-radius: 4px;
+      }
+
+      /* ── WHATSAPP ── */
+      .wa-btn {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 900;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #25d366;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .wa-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 10px 32px rgba(37, 211, 102, 0.55);
+      }
+      .wa-pulse {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: rgba(37, 211, 102, 0.35);
+        animation: waPulse 2.6s infinite;
+      }
+      @keyframes waPulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(1.85);
+          opacity: 0;
+        }
+      }
+
+      /* ── SCROLL REVEAL ── */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.68s ease,
+          transform 0.68s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+      .reveal-stagger > * {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.58s ease,
+          transform 0.58s ease;
+      }
+      .reveal-stagger.visible > *:nth-child(1) {
+        opacity: 1;
+        transform: none;
+        transition-delay: 0.04s;
+      }
+      .reveal-stagger.visible > *:nth-child(2) {
+        opacity: 1;
+        transform: none;
+        transition-delay: 0.13s;
+      }
+      .reveal-stagger.visible > *:nth-child(3) {
+        opacity: 1;
+        transform: none;
+        transition-delay: 0.22s;
+      }
+      .reveal-stagger.visible > *:nth-child(4) {
+        opacity: 1;
+        transform: none;
+        transition-delay: 0.31s;
+      }
+      .reveal-stagger.visible > *:nth-child(5) {
+        opacity: 1;
+        transform: none;
+        transition-delay: 0.4s;
+      }
+      .reveal-stagger.visible > *:nth-child(6) {
+        opacity: 1;
+        transform: none;
+        transition-delay: 0.49s;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 1024px) {
+        .menu-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .reserve-inner {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+        .story-split {
+          grid-template-columns: 1fr;
+        }
+        .story-img {
+          height: 340px;
+        }
+      }
+      @media (max-width: 768px) {
+        section {
+          padding: 64px 0;
+        }
+        .top-bar {
+          display: none;
+        }
+        .navbar {
+          padding: 16px 20px;
+          top: 0;
+        }
+        .navbar.scrolled {
+          padding: 12px 20px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .two-col {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+        .two-col.flip {
+          direction: ltr;
+        }
+        .about-img {
+          height: 320px;
+        }
+        .about-pill {
+          display: none;
+        }
+        .stats-bar {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 32px 0;
+          padding: 44px 20px;
+        }
+        .stat-cell:nth-child(2) {
+          border-right: none;
+        }
+        .menu-grid {
+          grid-template-columns: 1fr;
+        }
+        .specials-grid {
+          grid-template-columns: 1fr;
+        }
+        .reviews-grid {
+          grid-template-columns: 1fr;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+        .strip-item {
+          padding: 8px 16px;
+          font-size: 12px;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .hero-btns {
+          flex-direction: column;
+        }
+        .btn {
+          text-align: center;
+        }
+      }
+      @media (max-width: 480px) {
+        .menu-tabs {
+          gap: 6px;
+        }
+        .tab-btn {
+          padding: 9px 16px;
+          font-size: 11px;
+        }
+        .special-card {
+          grid-template-columns: 1fr;
+        }
+        .special-img {
+          width: 100%;
+          height: 180px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TOP BAR -->
+    <div class="top-bar" id="topBar">
+      <div class="top-bar-left">
+        <span>📍 Plot 23, Bukoto Street, Kampala</span>
+        <span>📞 <a href="tel:+256700230230">+256 700 230 230</a></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px">
+        <span class="hours-badge">Open Now</span>
+        <span>Mon–Sun &nbsp;·&nbsp; 7:00 AM – 11:00 PM</span>
+      </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+      <a href="/" class="nav-logo">
+        <div class="logo-leaf">🌿</div>
+        <div class="logo-text">
+          <span class="logo-name">Mazuri Kitchen</span>
+          <span class="logo-sub">Fresh · Bold · East African</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#specials">Specials</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#reserve" class="nav-reserve">Reserve a Table</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="mob-close" id="mobClose">✕</button>
+      <a href="#about">About Us</a>
+      <a href="#menu">Our Menu</a>
+      <a href="#specials">Today's Specials</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#reserve">Contact Us</a>
+      <a href="#reserve" class="mob-cta-link">Reserve a Table</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-deco"></div>
+      <div class="container">
+        <div class="hero-content">
+          <p class="hero-pre">Bukoto, Kampala</p>
+          <h1>Eat Fresh.<br />Live <em>Boldly.</em></h1>
+          <p class="hero-sub">
+            Farm-to-table East African cuisine — vibrant flavours rooted in
+            local soil, crafted for the modern table. Every plate tells a story
+            of where it grew.
+          </p>
+          <div class="hero-btns">
+            <a href="#menu" class="btn btn-bright">Explore Our Menu</a>
+            <a href="#reserve" class="btn btn-outline-white">Reserve a Table</a>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-cue">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          stroke-width="2"
+        >
+          <path d="M12 5v14M5 12l7 7 7-7" />
+        </svg>
+        Scroll
+      </div>
+    </section>
+
+    <!-- FEATURE STRIP -->
+    <div class="feature-strip">
+      <div class="feature-strip-inner">
+        <div class="strip-item"><span>🌱</span> 100% Locally Sourced</div>
+        <div class="strip-item"><span>🍳</span> Cooked to Order</div>
+        <div class="strip-item"><span>🚗</span> Free Delivery in Kampala</div>
+        <div class="strip-item"><span>🎂</span> Private Dining Available</div>
+        <div class="strip-item">
+          <span>⭐</span> Rated #1 on TripAdvisor KLA
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <div class="two-col reveal">
+          <div class="about-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&auto=format&fit=crop&q=80"
+              alt="Mazuri Kitchen chefs at work"
+              class="about-img"
+            />
+            <div class="about-pill">
+              <strong>8</strong>Years Feeding<br />Kampala's Best
+            </div>
+          </div>
+          <div>
+            <p class="section-label">Our Story</p>
+            <h2 class="section-title">Rooted in Uganda. Inspired by Africa.</h2>
+            <div class="green-rule"></div>
+            <p class="section-body">
+              Mazuri Kitchen was born in 2017 with a single conviction: that
+              East African food deserves its seat at the world's finest tables.
+              We work directly with smallholder farmers in Wakiso, Mpigi, and
+              Mbarara — buying fresh at source, arriving daily, cooked with
+              care.
+            </p>
+            <p class="section-body" style="margin-top: -10px">
+              From smoky matoke served in banana leaf to slow-braised goat with
+              herb-infused groundnut sauce, every dish on our menu carries the
+              fingerprint of someone who grew it, harvested it, and trusted us
+              with it.
+            </p>
+
+            <div class="values-list">
+              <div class="value-item">
+                <div class="value-dot">🌿</div>
+                <div class="value-text">
+                  <h4>Farm-to-Table Sourcing</h4>
+                  <p>
+                    We partner with 40+ local farms. No imported ingredients
+                    where local ones thrive.
+                  </p>
+                </div>
+              </div>
+              <div class="value-item">
+                <div class="value-dot">♻️</div>
+                <div class="value-text">
+                  <h4>Zero-Waste Kitchen</h4>
+                  <p>
+                    Compost programme, reusable packaging, and energy-efficient
+                    cooking equipment throughout.
+                  </p>
+                </div>
+              </div>
+              <div class="value-item">
+                <div class="value-dot">👩‍🍳</div>
+                <div class="value-text">
+                  <h4>Community-First Hiring</h4>
+                  <p>
+                    Our team is drawn from local culinary schools, single-parent
+                    families, and youth training programmes.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <a href="#menu" class="btn btn-green">See What We Cook</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar reveal">
+      <div class="stat-cell">
+        <div class="stat-num">40+</div>
+        <div class="stat-lbl">Farm Partners</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">280</div>
+        <div class="stat-lbl">Seats Indoors &amp; Out</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">8</div>
+        <div class="stat-lbl">Years Serving Kampala</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">★ 4.9</div>
+        <div class="stat-lbl">Average Guest Rating</div>
+      </div>
+    </div>
+
+    <!-- MENU -->
+    <section id="menu">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="section-label">What We Serve</p>
+          <h2 class="section-title">A Menu Built Around the Season</h2>
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 17px;
+              line-height: 1.8;
+              font-weight: 300;
+            "
+          >
+            Our menu changes monthly to follow what Uganda's farms produce best.
+            Below is a taste of what's on right now.
+          </p>
+        </div>
+        <div class="menu-tabs reveal">
+          <button class="tab-btn active">All Dishes</button>
+          <button class="tab-btn">Starters</button>
+          <button class="tab-btn">Mains</button>
+          <button class="tab-btn">Grills</button>
+          <button class="tab-btn">Vegetarian</button>
+          <button class="tab-btn">Desserts</button>
+        </div>
+        <div class="menu-grid reveal-stagger">
+          <div class="menu-card">
+            <img
+              src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&auto=format&fit=crop&q=80"
+              alt="Rolex Wrap"
+              class="menu-img"
+            />
+            <div class="menu-body">
+              <p class="menu-tag">🇺🇬 Ugandan Classic</p>
+              <h3 class="menu-name">Signature Rolex Wrap</h3>
+              <p class="menu-desc">
+                A Kampala street-food icon, elevated. Scrambled free-range eggs,
+                sautéed tomatoes, onions, and cabbage rolled in a crisp chapati.
+                Served with house chilli oil.
+              </p>
+              <div class="menu-footer">
+                <span class="menu-price">UGX 18,000</span>
+                <span class="menu-badge popular">⭐ Most Popular</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card">
+            <img
+              src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&auto=format&fit=crop&q=80"
+              alt="Slow Braised Goat"
+              class="menu-img"
+            />
+            <div class="menu-body">
+              <p class="menu-tag">🍖 Signature Main</p>
+              <h3 class="menu-name">Slow-Braised Goat Stew</h3>
+              <p class="menu-desc">
+                24-hour marinated Mbarara goat, slow-cooked with garden herbs,
+                groundnut paste, and ripe tomatoes. Served with golden fried
+                matoke and kachumbari.
+              </p>
+              <div class="menu-footer">
+                <span class="menu-price">UGX 42,000</span>
+                <span class="menu-badge spicy">🌶 Mild Spice</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card">
+            <img
+              src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80"
+              alt="Garden Harvest Bowl"
+              class="menu-img"
+            />
+            <div class="menu-body">
+              <p class="menu-tag">🌱 Vegetarian</p>
+              <h3 class="menu-name">Garden Harvest Bowl</h3>
+              <p class="menu-desc">
+                Roasted seasonal vegetables, herbed lentils, avocado cream, and
+                pickled red onion on a base of nutty sorghum grain. 100%
+                plant-based and utterly satisfying.
+              </p>
+              <div class="menu-footer">
+                <span class="menu-price">UGX 28,000</span>
+                <span class="menu-badge vegan">🌿 Vegan</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card">
+            <img
+              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format&fit=crop&q=80"
+              alt="Tilapia Grill"
+              class="menu-img"
+            />
+            <div class="menu-body">
+              <p class="menu-tag">🐟 Lake Victoria Catch</p>
+              <h3 class="menu-name">Whole Grilled Tilapia</h3>
+              <p class="menu-desc">
+                Fresh Lake Victoria tilapia, chargrilled over firewood, seasoned
+                with lemon, garlic, and our house spice blend. Served with ugali
+                and sukuma wiki.
+              </p>
+              <div class="menu-footer">
+                <span class="menu-price">UGX 38,000</span>
+                <span class="menu-badge popular">🔥 Chef's Pick</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card">
+            <img
+              src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&auto=format&fit=crop&q=80"
+              alt="Pumpkin Soup"
+              class="menu-img"
+            />
+            <div class="menu-body">
+              <p class="menu-tag">🥣 Starter</p>
+              <h3 class="menu-name">Creamed Pumpkin Soup</h3>
+              <p class="menu-desc">
+                Locally grown pumpkin blended with coconut cream, roasted
+                garlic, and a swirl of chilli oil. Served with warm sesame
+                flatbread and herbed butter.
+              </p>
+              <div class="menu-footer">
+                <span class="menu-price">UGX 16,000</span>
+                <span class="menu-badge vegan">🌿 Vegan Option</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card">
+            <img
+              src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&auto=format&fit=crop&q=80"
+              alt="Passion Fruit Panna Cotta"
+              class="menu-img"
+            />
+            <div class="menu-body">
+              <p class="menu-tag">🍮 Dessert</p>
+              <h3 class="menu-name">Passion Fruit Panna Cotta</h3>
+              <p class="menu-desc">
+                Silky vanilla panna cotta topped with tart Ugandan passion fruit
+                curd, crushed roasted peanuts, and fresh mint. A bright,
+                tropical finish to any meal.
+              </p>
+              <div class="menu-footer">
+                <span class="menu-price">UGX 14,000</span>
+                <span class="menu-badge popular">💛 Guest Favourite</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY (Kitchen Philosophy) -->
+    <section id="story">
+      <div class="container">
+        <div class="story-split reveal">
+          <img
+            src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=900&auto=format&fit=crop&q=80"
+            alt="Mazuri open kitchen"
+            class="story-img"
+          />
+          <div class="story-text">
+            <p class="section-label">Our Kitchen Philosophy</p>
+            <h2 class="section-title">The Open Kitchen Approach</h2>
+            <p class="section-body">
+              Our kitchen has no hidden doors. Guests are welcome to watch,
+              smell, and ask questions — because transparency is how we build
+              trust, one dish at a time.
+            </p>
+            <ul class="story-list">
+              <li>
+                Every ingredient has a named source — we publish our farm
+                partners quarterly.
+              </li>
+              <li>
+                Our head chef trained at the East African Culinary Institute and
+                spent two years cooking across Rwanda, Tanzania, and Ethiopia.
+              </li>
+              <li>
+                We bake our bread in-house daily using heritage grain from
+                Kabale.
+              </li>
+              <li>
+                No MSG, no artificial flavour boosters — just technique, time,
+                and good ingredients.
+              </li>
+            </ul>
+            <a href="#reserve" class="btn btn-bright">Book a Table</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TODAY'S SPECIALS -->
+    <section id="specials">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="section-label">Fresh This Week</p>
+          <h2 class="section-title">Today's Chef Specials</h2>
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 17px;
+              line-height: 1.8;
+              font-weight: 300;
+            "
+          >
+            These dishes rotate with the harvest. Check in with us or follow our
+            Instagram for daily updates.
+          </p>
+        </div>
+        <div class="specials-grid reveal-stagger">
+          <div class="special-card">
+            <img
+              src="https://images.unsplash.com/photo-1563379091339-03246963d96c?w=400&auto=format&fit=crop&q=80"
+              alt="Matoke & Beans"
+              class="special-img"
+            />
+            <div class="special-body">
+              <p class="special-tag">🌱 Vegetarian · Limited</p>
+              <h3 class="special-name">
+                Steamed Matoke &amp; Spiced Kidney Beans
+              </h3>
+              <p class="special-desc">
+                A Tuesday institution. Silky steamed plantain alongside
+                slow-cooked red kidney beans in a tomato-herb sauce.
+              </p>
+              <p class="special-price">UGX 22,000</p>
+            </div>
+          </div>
+
+          <div class="special-card">
+            <img
+              src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80"
+              alt="Lamb Rack"
+              class="special-img"
+            />
+            <div class="special-body">
+              <p class="special-tag">🍖 Weekend Special</p>
+              <h3 class="special-name">
+                Rosemary Lamb Rack with Sweet Potato Mash
+              </h3>
+              <p class="special-desc">
+                Karamoja lamb, herb-crusted and oven-roasted. Served with
+                whipped sweet potato and a red wine jus.
+              </p>
+              <p class="special-price">UGX 58,000</p>
+            </div>
+          </div>
+
+          <div class="special-card">
+            <img
+              src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&auto=format&fit=crop&q=80"
+              alt="Suya Skewers"
+              class="special-img"
+            />
+            <div class="special-body">
+              <p class="special-tag">🔥 Grill Special</p>
+              <h3 class="special-name">Suya Beef Skewers with Groundnut Dip</h3>
+              <p class="special-desc">
+                West African-inspired beef skewers with our house suya spice
+                blend. Grilled over charcoal, served with cooling groundnut
+                sauce and fresh tomato.
+              </p>
+              <p class="special-price">UGX 32,000</p>
+            </div>
+          </div>
+
+          <div class="special-card">
+            <img
+              src="https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=400&auto=format&fit=crop&q=80"
+              alt="Mango Cheesecake"
+              class="special-img"
+            />
+            <div class="special-body">
+              <p class="special-tag">🍰 Dessert Special</p>
+              <h3 class="special-name">
+                No-Bake Mango &amp; Ginger Cheesecake
+              </h3>
+              <p class="special-desc">
+                Creamy cheesecake base on a ginger biscuit crust, topped with
+                ripe local mango gel and a dusting of lime zest.
+              </p>
+              <p class="special-price">UGX 16,000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <div class="cta-banner">
+      <div class="cta-banner-inner reveal">
+        <p class="section-label">Celebrate with Us</p>
+        <h2>Private Dining &amp; Events Done Right</h2>
+        <p>
+          Birthdays, corporate lunches, product launches, or a quiet anniversary
+          — our private dining room seats up to 40, with a dedicated chef and
+          custom menu.
+        </p>
+        <div
+          style="
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        >
+          <a
+            href="#reserve"
+            class="btn btn-bright"
+            style="font-size: 13px; padding: 16px 40px"
+            >Enquire Now</a
+          >
+          <a
+            href="https://wa.me/256700230230"
+            class="btn btn-outline-white"
+            style="font-size: 13px; padding: 16px 40px"
+            >💬 WhatsApp Us</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <section id="reviews">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="section-label">Guest Reviews</p>
+          <h2 class="section-title">What Our Guests Are Saying</h2>
+        </div>
+        <div class="reviews-grid reveal-stagger">
+          <div class="review-card">
+            <div class="r-stars">★★★★★</div>
+            <p class="r-text">
+              "The slow-braised goat was the best thing I've eaten in Kampala —
+              and I've been eating here for three years. The flavours are
+              complex, warming, and completely honest. Mazuri Kitchen is the
+              real deal."
+            </p>
+            <div class="r-author">
+              <div class="r-avatar">TN</div>
+              <div>
+                <div class="r-name">Tendo Nakato</div>
+                <div class="r-origin">Kampala, Uganda</div>
+              </div>
+            </div>
+          </div>
+          <div class="review-card">
+            <div class="r-stars">★★★★★</div>
+            <p class="r-text">
+              "As a food writer visiting from Nairobi, I wasn't expecting to be
+              this moved by a restaurant meal in Uganda. The garden harvest bowl
+              was extraordinary. I've recommended Mazuri to everyone I know."
+            </p>
+            <div class="r-author">
+              <div class="r-avatar">AM</div>
+              <div>
+                <div class="r-name">Amara Mwangi</div>
+                <div class="r-origin">Nairobi, Kenya</div>
+              </div>
+            </div>
+          </div>
+          <div class="review-card">
+            <div class="r-stars">★★★★★</div>
+            <p class="r-text">
+              "The open kitchen concept makes dining here an experience rather
+              than just a meal. You watch the chefs, smell everything as it's
+              cooking, and every dish arrives full of intention. This is the
+              future of African dining."
+            </p>
+            <div class="r-author">
+              <div class="r-avatar">JP</div>
+              <div>
+                <div class="r-name">Jean-Pierre Habimana</div>
+                <div class="r-origin">Kigali, Rwanda</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESERVATION & CONTACT -->
+    <section id="reserve">
+      <div class="container">
+        <div class="reserve-inner">
+          <div class="reserve-left reveal">
+            <p class="section-label">Find Us &amp; Book</p>
+            <h2 class="section-title">Come Eat With Us</h2>
+            <p class="section-body">
+              Walk-ins are welcome, but we recommend a reservation for Friday
+              and Saturday evenings. Our team will confirm your booking within
+              two hours.
+            </p>
+
+            <div class="contact-list">
+              <div class="contact-item">
+                <div class="c-icon">📍</div>
+                <div>
+                  <div class="c-label">Location</div>
+                  <div class="c-val">
+                    Plot 23, Bukoto Street, Kampala, Uganda
+                  </div>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="c-icon">📞</div>
+                <div>
+                  <div class="c-label">Phone &amp; WhatsApp</div>
+                  <div class="c-val">
+                    <a href="tel:+256700230230">+256 700 230 230</a>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="c-icon">✉️</div>
+                <div>
+                  <div class="c-label">Email</div>
+                  <div class="c-val">
+                    <a href="mailto:hello@mazurikitchen.ug"
+                      >hello@mazurikitchen.ug</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="c-icon">🕐</div>
+                <div>
+                  <div class="c-label">Opening Hours</div>
+                  <div class="c-val">
+                    Monday – Sunday &nbsp;·&nbsp; 7:00 AM – 11:00 PM<br />Kitchen
+                    closes at 10:00 PM
+                  </div>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="c-icon">🚗</div>
+                <div>
+                  <div class="c-label">Delivery</div>
+                  <div class="c-val">
+                    Free delivery within 5km &nbsp;·&nbsp; Bolt Food &amp; Jumia
+                    Food available
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal">
+            <div class="form-card">
+              <h3>Reserve a Table</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" placeholder="Sarah" />
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" placeholder="Auma" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" placeholder="+256 7XX XXX XXX" />
+                </div>
+                <div class="form-group">
+                  <label>Email (Optional)</label>
+                  <input type="email" placeholder="sarah@email.com" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Date</label>
+                  <input type="date" />
+                </div>
+                <div class="form-group">
+                  <label>Time</label>
+                  <select>
+                    <option>Breakfast – 7:00 AM</option>
+                    <option>Breakfast – 8:30 AM</option>
+                    <option>Lunch – 12:00 PM</option>
+                    <option>Lunch – 1:30 PM</option>
+                    <option>Dinner – 6:00 PM</option>
+                    <option selected>Dinner – 7:30 PM</option>
+                    <option>Dinner – 9:00 PM</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Number of Guests</label>
+                  <select>
+                    <option>1 Guest</option>
+                    <option selected>2 Guests</option>
+                    <option>3 – 4 Guests</option>
+                    <option>5 – 8 Guests</option>
+                    <option>9 – 20 Guests (Group)</option>
+                    <option>21+ (Private Event)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Seating Preference</label>
+                  <select>
+                    <option>No preference</option>
+                    <option>Indoor – Air Conditioned</option>
+                    <option>Garden Terrace</option>
+                    <option>Chef's Table</option>
+                    <option>Private Dining Room</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Special Requests / Dietary Notes</label>
+                <textarea
+                  rows="3"
+                  placeholder="Allergies, celebrations, accessibility needs…"
+                ></textarea>
+              </div>
+              <button class="form-submit">Reserve My Table →</button>
+              <p class="form-note">
+                We'll confirm by phone within 2 hours · Walk-ins also welcome
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand-name">Mazuri Kitchen</div>
+            <div class="footer-brand-sub">Fresh · Bold · East African</div>
+            <p>
+              A farm-to-table restaurant in the heart of Kampala, rooted in
+              Ugandan produce and East African culinary tradition. Open 7 days a
+              week.
+            </p>
+            <div class="footer-social">
+              <a href="#" class="s-btn">📷</a>
+              <a href="#" class="s-btn">f</a>
+              <a href="#" class="s-btn">𝕏</a>
+              <a href="#" class="s-btn">▶</a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <ul>
+              <li><a href="#">Our Menu</a></li>
+              <li><a href="#">Chef's Specials</a></li>
+              <li><a href="#">Breakfast</a></li>
+              <li><a href="#">Lunch &amp; Dinner</a></li>
+              <li><a href="#">Drinks &amp; Juices</a></li>
+              <li><a href="#">Kids Menu</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Dining</h4>
+            <ul>
+              <li><a href="#">Reserve a Table</a></li>
+              <li><a href="#">Private Events</a></li>
+              <li><a href="#">Corporate Catering</a></li>
+              <li><a href="#">Delivery</a></li>
+              <li><a href="#">Gift Vouchers</a></li>
+              <li><a href="#">Loyalty Programme</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li>Plot 23, Bukoto Street</li>
+              <li>Kampala, Uganda</li>
+              <li><a href="tel:+256700230230">+256 700 230 230</a></li>
+              <li>
+                <a href="mailto:hello@mazurikitchen.ug"
+                  >hello@mazurikitchen.ug</a
+                >
+              </li>
+              <li><a href="https://wa.me/256700230230">WhatsApp Order</a></li>
+              <li>Open Daily 7 AM – 11 PM</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Mazuri Kitchen Uganda. All rights reserved.</p>
+          <div class="cert-badges">
+            <span class="c-badge">UNBS Certified</span>
+            <span class="c-badge">TripAdvisor #1</span>
+            <span class="c-badge">Bolt Food Partner</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WHATSAPP FLOAT -->
+    <a
+      href="https://wa.me/256700230230"
+      class="wa-btn"
+      target="_blank"
+      aria-label="Order via WhatsApp"
+    >
+      <div class="wa-pulse"></div>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+        />
+      </svg>
+    </a>
+
+    <script>
+      // Navbar sticky (offset for top bar)
+      const navbar = document.getElementById("navbar");
+      const topBar = document.getElementById("topBar");
+      function updateNav() {
+        const scrolled = window.scrollY > 50;
+        navbar.classList.toggle("scrolled", scrolled);
+        navbar.style.top = scrolled ? "0" : topBar.offsetHeight + "px";
+      }
+      window.addEventListener("scroll", updateNav);
+      updateNav();
+
+      // Mobile menu
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const mobClose = document.getElementById("mobClose");
+      hamburger.addEventListener("click", () =>
+        mobileMenu.classList.add("open"),
+      );
+      mobClose.addEventListener("click", () =>
+        mobileMenu.classList.remove("open"),
+      );
+      mobileMenu
+        .querySelectorAll("a")
+        .forEach((a) =>
+          a.addEventListener("click", () =>
+            mobileMenu.classList.remove("open"),
+          ),
+        );
+
+      // Menu tabs (visual only)
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+
+      // Scroll reveal
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document
+        .querySelectorAll(".reveal, .reveal-stagger")
+        .forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
